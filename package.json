@@ -18,10 +18,20 @@
     "type": "git",
     "url": "git+https://github.com/subhamg/unique-username-generator.git"
   },
-  "keywords": ["generate", "username", "username-from-email", "email", "generate username", "generate-username-from-email", "generate unique username", "unique", "random",
-		"user",
-		"generator",
-		"node"],
+  "keywords": [
+    "generate",
+    "username",
+    "username-from-email",
+    "email",
+    "generate username",
+    "generate-username-from-email",
+    "generate unique username",
+    "unique",
+    "random",
+    "user",
+    "generator",
+    "node"
+  ],
   "author": "Subham Goyal",
   "license": "MIT",
   "bugs": {
@@ -40,6 +50,7 @@
   },
   "dependencies": {
     "@types/chai": "^4.2.18",
-    "@types/mocha": "^8.2.2"
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.6.0"
   }
 }
