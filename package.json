@@ -1,7 +1,7 @@
 {
   "name": "unique-username-generator",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A package to generate a unique username from email or randomly selected nouns and adjectives. User can add a separator between the username, define the maximum length of a username and adds up to six random digits.",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -9,13 +9,21 @@
     "coverage": "nyc npm test",
     "lint": "eslint '*/**/*.ts'"
   },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/subhamg/unique-username-generator.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["generate", "username", "username-from-email", "email", "generate username", "generate-username-from-email", "generate unique username", "unique", "random",
+		"user",
+		"generator",
+		"node"],
+  "author": "Subham Goyal",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/subhamg/unique-username-generator/issues"
   },

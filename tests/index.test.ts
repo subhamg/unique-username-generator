@@ -1,4 +1,4 @@
-import { generateFromEmail, generateUsername } from "../src/index";
+import { generateFromEmail } from "../src/index";
 import { expect } from "chai";
 
 describe("generate-unique-username-from-email unit tests", (): void => {
