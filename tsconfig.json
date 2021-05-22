@@ -4,7 +4,8 @@
       "module": "commonjs",
       "strict": true, 
       "declaration": true,
-      "outDir": "./dist"
+      "outDir": "./dist",
+      "resolveJsonModule": true
     },
     "exclude": [
         "tests",
