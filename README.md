@@ -1,8 +1,8 @@
 [![npm version](https://badge.fury.io/js/unique-username-generator.svg)](https://badge.fury.io/js/unique-username-generator)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/subhamg/unique-username-generator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/subhamg/unique-username-generator/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/subhamg/unique-username-generator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/subhamg/unique-username-generator/context:javascript)
-![npm](https://img.shields.io/npm/dt/unique-username-generator?style=plastic)
-
+![npm](https://img.shields.io/npm/dt/unique-username-generator)
+![NPM](https://img.shields.io/npm/l/unique-username-generator)
 
 # unique-username-generator
 
