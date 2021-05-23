@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/unique-username-generator.svg)](https://badge.fury.io/js/unique-username-generator)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/subhamg/unique-username-generator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/subhamg/unique-username-generator/alerts/)
+
 # unique-username-generator
 
 A package to generate a unique username from email or randomly selected nouns and adjectives. User can add a separator between the username, define the maximum length of a username and adds up to six random digits.
