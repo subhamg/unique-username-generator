@@ -21,16 +21,15 @@ import genUsername from "unique-username-generator";
 
 ### Generate username from email
 
-It will generate username from email and add three random digits at the end of the name.
+It will generate username from email and add upto six random digits at the end of the name.
 
 ```javascript
-const username = genUsername.generateFromEmail("lakshmi.narayan@example.com");
+// add three random digits
+const username = genUsername.generateFromEmail("lakshmi.narayan@example.com", 3);
 console.log(username); // lakshminarayan234
 
-const username = genUsername.generateFromEmail(
-  "lakshmi.narayan@example.com",
-  4
-); // add upto six random digits
+// add four random digits
+const username = genUsername.generateFromEmail("lakshmi.narayan@example.com", 4); 
 console.log(username); // lakshminarayan2347
 ```
 
