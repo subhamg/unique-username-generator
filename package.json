@@ -1,6 +1,6 @@
 {
   "name": "unique-username-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A package to generate a unique username from email or randomly selected nouns and adjectives. User can add a separator between the username, define the maximum length of a username and adds up to six random digits.",
   "main": "./dist/index.js",
   "scripts": {
