@@ -1,5 +1,6 @@
 [![npm version](https://badge.fury.io/js/unique-username-generator.svg)](https://badge.fury.io/js/unique-username-generator)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/subhamg/unique-username-generator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/subhamg/unique-username-generator/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/subhamg/unique-username-generator.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/subhamg/unique-username-generator/context:javascript)
 
 # unique-username-generator
 
