@@ -1,6 +1,15 @@
-import * as nouns from "./data/nouns.json";
-import * as adjectives from "./data/adjectives.json";
+import { nouns, adjectives } from "./data";
 import * as crypto from "crypto";
+
+type Style = "lowerCase" | "upperCase" | "capital";
+
+export interface Config {
+  dictionaries: string[][];
+  separator?: string;
+  randomDigits?: number;
+  length?: number;
+  style?: Style;
+}
 
 const randomNumber = (maxNumber: number | undefined) => {
   let randomNumberString;
@@ -64,3 +73,48 @@ export function generateUsername(
 
   return username;
 }
+
+export function uniqueUsernameGenerator(config: Config): string {
+  if (!config.dictionaries) {
+    throw new Error(
+      "Cannot find any dictionary. Please provide at least one, or leave " +
+      "the 'dictionary' field empty in the config object",
+    );
+  } else {
+    const dictionariesLength = config.dictionaries.length;
+    let name = "";
+    for (let i = 0; i < dictionariesLength; i++) {
+      if (name && config.separator) {
+        if (config.separator) {
+          name = name + config.separator + config.dictionaries[i][Math.floor(Math.random() * config.dictionaries[i].length)];
+        } else {
+          name = name + config.dictionaries[i][Math.floor(Math.random() * config.dictionaries[i].length)];
+        }
+      } else {
+        name = config.dictionaries[i][Math.floor(Math.random() * config.dictionaries[i].length)];
+      }
+    }
+
+    let username = name + randomNumber(config.randomDigits);
+
+    username = username.toLowerCase();
+
+    if (config.style === "lowerCase") {
+      username = username.toLowerCase();
+    } else if (config.style === "capital") {
+      const [firstLetter, ...rest] = username.split("");
+      username = firstLetter.toUpperCase() + rest.join("");
+    } else if (config.style === "upperCase") {
+      username = username.toUpperCase();
+    }
+
+    if (config.length) {
+      return username.substring(0, config.length)
+    } else {
+      return username.substring(0, 15);
+    }
+
+  }
+}
+
+export { adjectives, nouns } from "./data";
