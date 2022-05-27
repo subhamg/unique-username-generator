@@ -109,7 +109,7 @@ export function uniqueUsernameGenerator(config: Config): string {
     }
 
     if (config.length) {
-      return username.substring(0, config.length)
+      return username.substring(0, config.length);
     } else {
       return username.substring(0, 15);
     }
