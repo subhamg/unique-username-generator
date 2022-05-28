@@ -11,6 +11,17 @@ export interface Config {
   style?: Style;
 }
 
+const getRandomInt = (min: number, max: number): number => {
+  const randomBuffer = new Uint32Array(1);
+
+  window.crypto.getRandomValues(randomBuffer);
+
+  const randomNumber = randomBuffer[0] / (0xffffffff + 1);
+
+  return (randomNumber * (max - min)) + min;
+}
+
+
 const randomNumber = (maxNumber: number | undefined) => {
   let randomNumberString;
   switch (maxNumber) {
@@ -86,12 +97,12 @@ export function uniqueUsernameGenerator(config: Config): string {
     for (let i = 0; i < dictionariesLength; i++) {
       if (name && config.separator) {
         if (config.separator) {
-          name = name + config.separator + config.dictionaries[i][Math.floor(Math.random() * config.dictionaries[i].length)];
+          name = name + config.separator + config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
         } else {
-          name = name + config.dictionaries[i][Math.floor(Math.random() * config.dictionaries[i].length)];
+          name = name + config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
         }
       } else {
-        name = config.dictionaries[i][Math.floor(Math.random() * config.dictionaries[i].length)];
+        name = config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
       }
     }
 
