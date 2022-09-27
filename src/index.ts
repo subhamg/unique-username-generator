@@ -54,7 +54,7 @@ export function generateFromEmail(
   email: string,
   randomDigits?: number
 ): string {
-  // Retrive name from email address
+  // Retrieve name from email address
   const nameParts = email.replace(/@.+/, "");
   // Replace all special characters like "@ . _ ";
   const name = nameParts.replace(/[&/\\#,+()$~%._@'":*?<>{}]/g, "");
@@ -73,9 +73,9 @@ export function generateUsername(
   let username;
   // Create unique username
   if (separator) {
-    username = noun + separator + adjective + randomNumber(randomDigits);
+    username = adjective + separator + noun + randomNumber(randomDigits);
   } else {
-    username = noun + adjective + randomNumber(randomDigits);
+    username = adjective + noun + randomNumber(randomDigits);
   }
 
   if (length) {
