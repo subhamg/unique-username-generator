@@ -1,5 +1,6 @@
 
 {
+    "extends": "@istanbuljs/nyc-config-typescript",
     "cache": false,
     "check-coverage": true,
     "extension": [
@@ -12,8 +13,8 @@
       "cobertura",
       "text-summary"
     ],
-    "statements": 90,
-    "branches": 90,
-    "functions": 90,
-    "lines": 90
+    "statements": 45,
+    "branches": 25,
+    "functions": 28,
+    "lines": 44
 }
