@@ -12,7 +12,8 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "semantic-release": "semantic-release --branches main"
   },
   "files": [
     "dist",
@@ -21,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/subhamg/unique-username-generator.git"
+    "url": "https://github.com/subhamg/unique-username-generator.git"
   },
   "keywords": [
     "generate",
@@ -58,6 +59,7 @@
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "ts-mocha": "^10.0.0",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "semantic-release": "^19.0.5"
   }
 }
