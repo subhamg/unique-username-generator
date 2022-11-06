@@ -11,9 +11,6 @@
     "lint": "eslint '*/**/*.ts'",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags",
     "semantic-release": "semantic-release --branches main"
   },
   "files": [
