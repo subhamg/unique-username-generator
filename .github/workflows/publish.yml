@@ -10,7 +10,7 @@ on:
     branches: '*'
 
 jobs:
-  build:
+  quality:
 
     runs-on: ${{ matrix.os }}
 
@@ -28,13 +28,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm run coverage
+    - run: npm run prepublishOnly
   
   publish:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: [build]
+    needs: [quality]
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -43,4 +43,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - run: npm run build --if-present
     - run: npm run semantic-release
+      env: 
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
