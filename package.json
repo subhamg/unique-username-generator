@@ -10,7 +10,6 @@
     "cover:report": "nyc report --reporter=lcov --reporter=text",
     "lint": "eslint '*/**/*.ts'",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
     "semantic-release": "semantic-release --branches main"
   },
   "files": [
