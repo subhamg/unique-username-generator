@@ -1,54 +1,33 @@
 import { nouns, adjectives } from "./data";
 import * as crypto from "crypto";
 
-type Style = "lowerCase" | "upperCase" | "capital";
+const getRandomInt = () => crypto.randomInt(0, 100) / 100;
 
-export interface Config {
-  dictionaries: string[][];
+const generateDigits = (numDigits = 0) => {
+  if (numDigits === 0) return "";
+  if (numDigits > 10) throw new Error("Cannot generate more than 10 numbers.");
+
+  let min = 1;
+  let max = 9;
+
+  while (numDigits > 1) {
+    min *= 10
+    max *= 10
+    numDigits--
+  }
+
+  return crypto.randomInt(min, max).toString();
+};
+
+const capitalizeString = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+export interface UsernameGeneratorConfig {
+  dictionaries?: string[][];
   separator?: string;
   randomDigits?: number;
   length?: number;
-  style?: Style;
+  style?: "lowerCase" | "upperCase" | "capitalize";
 }
-
-const getRandomInt = (min: number, max: number): number => {
-  const randomBuffer = new Uint32Array(1);
-
-  window.crypto.getRandomValues(randomBuffer);
-
-  const randomNumber = randomBuffer[0] / (0xffffffff + 1);
-
-  return (randomNumber * (max - min)) + min;
-}
-
-
-const randomNumber = (maxNumber: number | undefined) => {
-  let randomNumberString;
-  switch (maxNumber) {
-    case 1:
-      randomNumberString = crypto.randomInt(1, 9).toString();
-      break;
-    case 2:
-      randomNumberString = crypto.randomInt(10, 90).toString();
-      break;
-    case 3:
-      randomNumberString = crypto.randomInt(100, 900).toString();
-      break;
-    case 4:
-      randomNumberString = crypto.randomInt(1000, 9000).toString();
-      break;
-    case 5:
-      randomNumberString = crypto.randomInt(10000, 90000).toString();
-      break;
-    case 6:
-      randomNumberString = crypto.randomInt(100000, 900000).toString();
-      break;
-    default:
-      randomNumberString = "";
-      break;
-  }
-  return randomNumberString;
-};
 
 export function generateFromEmail(
   email: string,
@@ -59,7 +38,7 @@ export function generateFromEmail(
   // Replace all special characters like "@ . _ ";
   const name = nameParts.replace(/[&/\\#,+()$~%._@'":*?<>{}]/g, "");
   // Create and return unique username
-  return name + randomNumber(randomDigits);
+  return name + generateDigits(randomDigits);
 }
 
 export function generateUsername(
@@ -73,9 +52,9 @@ export function generateUsername(
   let username;
   // Create unique username
   if (separator) {
-    username = adjective + separator + noun + randomNumber(randomDigits);
+    username = adjective + separator + noun + generateDigits(randomDigits);
   } else {
-    username = adjective + noun + randomNumber(randomDigits);
+    username = adjective + noun + generateDigits(randomDigits);
   }
 
   if (length) {
@@ -85,47 +64,37 @@ export function generateUsername(
   return username;
 }
 
-export function uniqueUsernameGenerator(config: Config): string {
-  if (!config.dictionaries) {
-    throw new Error(
-      "Cannot find any dictionary. Please provide at least one, or leave " +
-      "the 'dictionary' field empty in the config object",
-    );
-  } else {
-    const dictionariesLength = config.dictionaries.length;
-    let name = "";
-    for (let i = 0; i < dictionariesLength; i++) {
-      if (name && config.separator) {
-        if (config.separator) {
-          name = name + config.separator + config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
-        } else {
-          name = name + config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
-        }
-      } else {
-        name = config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
-      }
-    }
+export function uniqueUsernameGenerator(config: UsernameGeneratorConfig): string {
+  const { dictionaries = [adjectives, nouns], separator = "", randomDigits = 0 } = config;
 
-    let username = name + randomNumber(config.randomDigits);
+  const numWords = dictionaries.length;
 
-    username = username.toLowerCase();
+  let username: string | string[] = [];
 
-    if (config.style === "lowerCase") {
-      username = username.toLowerCase();
-    } else if (config.style === "capital") {
-      const [firstLetter, ...rest] = username.split("");
-      username = firstLetter.toUpperCase() + rest.join("");
-    } else if (config.style === "upperCase") {
-      username = username.toUpperCase();
-    }
+  for (let idx = 0; idx < numWords; idx++) {
+    const dictionary = dictionaries[idx];
+    const randomWord = dictionary[Math.floor(getRandomInt() * dictionary.length)]
 
-    if (config.length) {
-      return username.substring(0, config.length);
-    } else {
-      return username.substring(0, 15);
-    }
-
+    username.push(randomWord);
   }
+
+  if (config.style === "capitalize") username = username.map(word => capitalizeString(word)); 
+
+  username = username.join(separator) 
+
+  if (randomDigits) username += generateDigits(config.randomDigits);
+  if (config.style === "lowerCase") username = username.toLowerCase();   
+  if (config.style === "upperCase") username = username.toUpperCase();
+
+  if (config.length) return username.substring(0, config.length);
+    
+  return username;
 }
 
-export { adjectives, nouns } from "./data";
+export {adjectives, nouns};
+
+export const exportedForUnitTests = {
+  getRandomInt,
+  generateDigits,
+  capitalizeString
+}

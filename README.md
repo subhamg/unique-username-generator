@@ -92,12 +92,12 @@ console.log(username); // blossom-logistical73
 
 By default, the unique username generator library comes with 2 dictionaries out of the box, so that you can use them straight away.
 
-The new syntax for using the default dictionaries is the following:
+They are loaded by defaullt, but can be manually imported and loaded as well.
 
 ```javascript
-import { uniqueUsernameGenerator, Config, adjectives, nouns } from 'unique-username-generator';
+import { uniqueUsernameGenerator, UsernameGeneratorConfig, adjectives, nouns } from 'unique-username-generator';
 
-const config: Config = {
+const config: UsernameGeneratorConfig = {
   dictionaries: [adjectives, nouns]
 }
 
@@ -119,10 +119,10 @@ const marvelCharacters = [
   'Thanos'
 ];
 
-const config: Config = {
+const config: UsernameGeneratorConfig = {
   dictionaries: [marvelCharacters],
   separator: '',
-  style: 'capital',
+  style: 'capitalize',
   randomDigits: 3
 }
 
@@ -136,18 +136,18 @@ Returns a `string` with a random generated username
 
 ### options
 
-Type: `Config`
+Type: `UsernameGeneratorConfig`
 
 The `options` argument mostly corresponds to the properties defined for uniqueUsernameGenerator. Only `dictionaries` is required.
 
 
 | Option       | Type                                | Description                                                                                                                                                                                                                                                                         | Default value | Example value                                                                                                                                                                                                           |
 |--------------|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dictionaries | `array`                             | This is an array of dictionaries. Each dictionary is an array of strings containing the words to use for generating the string.<br>The provided dictionaries can be imported from the library as a separate modules and provided in the desired order.                              | n/a           | <br>```import { uniqueUsernameGenerator, adjectives, nouns } from 'unique-username-generator';```<br>```const username: string = uniqueUsernameGenerator({ dictionaries: [nouns, adjectives]}); // blossomlogistical``` |
+| dictionaries | `array`                             | This is an array of dictionaries. Each dictionary is an array of strings containing the words to use for generating the string.<br />The two provided dictionaries are loaded if this property is not defined. Or, they can be imported from the library as a separate modules and provided in the desired order alongside custom dictionaries.                              | [adjectives, nouns]           | <br />```import { uniqueUsernameGenerator, adjectives, nouns } from 'unique-username-generator';```<br />```const username: string = uniqueUsernameGenerator({ dictionaries: [nouns, adjectives]}); // blossomlogistical``` |
 | separator    | `string`                            | A string separator to be used for separate the words generated. The default separator is set to be empty string.                                                                                                                                                                    | ""            | `-`                                                                                                                                                                                                                     |
 | randomDigits | `number`                            | A number of random digits to add at the end of a username.                                                                                                                                                                                                                          | 0             | `3`                                                                                                                                                                                                                     |
-| length       | `number`                            | A maximum length of a username                                                                                                                                                                                                                                                      | 15            | `12`                                                                                                                                                                                                                    |
-| style        | `lowerCase \| upperCase \| capital` | The default value is set to `lowerCase` and it will return a lower case username.<br>By setting the value to `upperCase`, the words, will be returned with all the letters in upper case format.<br>The `capital` option will capitalize each word of the unique username generated | lowerCase     | `lowerCase`                                                                                                                                                                                                             |
+| length       | `number`                            | A maximum length of a username                                                                                                                                                                                                                                                      | --            | `12`                                                                                                                                                                                                                    |
+| style        | `lowerCase \| upperCase \| capitalize` | The default value is set to `lowerCase` and it will return a lower case username.<br>By setting the value to `upperCase`, the words, will be returned with all the letters in upper case format.<br>The `capitalize` option will capitalize each word of the unique username generated | lowerCase     | `lowerCase`                                                                                                                                                                                                             |
 
 ## License
 
