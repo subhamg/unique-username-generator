@@ -92,7 +92,7 @@ console.log(username); // blossom-logistical73
 
 By default, the unique username generator library comes with 2 dictionaries out of the box, so that you can use them straight away.
 
-They are loaded by defaullt, but can be manually imported and loaded as well.
+They are loaded by default, but can be manually imported and loaded as well.
 
 ```javascript
 import { uniqueUsernameGenerator, UsernameGeneratorConfig, adjectives, nouns } from 'unique-username-generator';

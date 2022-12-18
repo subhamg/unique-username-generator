@@ -3,7 +3,7 @@ import { expect } from "chai";
 
 const { getRandomInt, generateDigits, capitalizeString } = exportedForUnitTests;
 
-describe("generate-unique-username-from-email unit tests", (): void => {
+describe("generateFromEmail()", (): void => {
   it("generating from email containing no special character in the name", (): void => {
     const actual: string = generateFromEmail("lakshminarayan@example.com");
     expect(actual).is.equal("lakshminarayan");
@@ -63,7 +63,7 @@ describe("generate-unique-username-from-email unit tests", (): void => {
 });
 
 describe("getRandomInt()", (): void => {
-  it("returns a decimal number to the second place between 0 and 1", (): void => {
+  it("returns a number between 0 and 1", (): void => {
     const actual: number = getRandomInt();
     expect(actual).to.be.above(0);
     expect(actual).to.be.below(1);
@@ -71,7 +71,6 @@ describe("getRandomInt()", (): void => {
 })
 
 describe("generateDigits()", (): void => {
-  // it 
   it("returns an empty string if not passed an argument", (): void => {
     const actual: string = generateDigits();
     expect(actual).to.equal("")

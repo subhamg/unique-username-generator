@@ -3,6 +3,9 @@
   "extends": "@istanbuljs/nyc-config-typescript",
   "cache": false,
   "check-coverage": true,
+  "include": [
+    "**/src/*.ts"
+  ],
   "reporter": [
     "cobertura",
     "text-summary"

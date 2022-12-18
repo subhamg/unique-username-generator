@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "test": "ts-mocha --loader=ts-node/esm tests/**/*.test.ts",
-    "coverage": "nyc npm test && npm run --loader=ts-node/esm cover:report",
+    "coverage": "nyc npm test && npm run cover:report",
     "cover:report": "nyc report --reporter=lcov --reporter=text",
     "lint": "eslint '*/**/*.ts'",
     "prepare": "npm run build",
