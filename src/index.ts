@@ -1,5 +1,5 @@
 import { nouns, adjectives } from "./data";
-import * as crypto from "crypto";
+import { randomBytes } from "crypto";
 
 type Style = "lowerCase" | "upperCase" | "capital";
 
@@ -11,37 +11,36 @@ export interface Config {
   style?: Style;
 }
 
+// Function to generate a random number within a given range
 const getRandomInt = (min: number, max: number): number => {
-  const randomBuffer = new Uint32Array(1);
+  const randomBuffer = randomBytes(4); // 4 bytes to generate a 32-bit integer
 
-  window.crypto.getRandomValues(randomBuffer);
+  const randomInt = randomBuffer.readUInt32BE(0); // Convert bytes to an unsigned 32-bit integer
 
-  const randomNumber = randomBuffer[0] / (0xffffffff + 1);
-
-  return (randomNumber * (max - min)) + min;
-}
+  return min + (randomInt % (max - min + 1));
+};
 
 
 const randomNumber = (maxNumber: number | undefined) => {
   let randomNumberString;
   switch (maxNumber) {
     case 1:
-      randomNumberString = crypto.randomInt(1, 9).toString();
+      randomNumberString = Math.floor(getRandomInt(1, 9)).toString();
       break;
     case 2:
-      randomNumberString = crypto.randomInt(10, 90).toString();
+      randomNumberString = Math.floor(getRandomInt(10, 90)).toString();
       break;
     case 3:
-      randomNumberString = crypto.randomInt(100, 900).toString();
+      randomNumberString = Math.floor(getRandomInt(100, 900)).toString();
       break;
     case 4:
-      randomNumberString = crypto.randomInt(1000, 9000).toString();
+      randomNumberString = Math.floor(getRandomInt(1000, 9000)).toString();
       break;
     case 5:
-      randomNumberString = crypto.randomInt(10000, 90000).toString();
+      randomNumberString = Math.floor(getRandomInt(10000, 90000)).toString();
       break;
     case 6:
-      randomNumberString = crypto.randomInt(100000, 900000).toString();
+      randomNumberString = Math.floor(getRandomInt(100000, 900000)).toString();
       break;
     default:
       randomNumberString = "";
