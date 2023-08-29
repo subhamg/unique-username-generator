@@ -91,18 +91,14 @@ export function uniqueUsernameGenerator(config: Config): string {
       "the 'dictionary' field empty in the config object",
     );
   } else {
+    const fromDictRander = (i: number) => config.dictionaries[i][getRandomInt(0, config.dictionaries[i].length - 1)];
     const dictionariesLength = config.dictionaries.length;
+    const separator = config.separator || "";
     let name = "";
     for (let i = 0; i < dictionariesLength; i++) {
-      if (name && config.separator) {
-        if (config.separator) {
-          name = name + config.separator + config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
-        } else {
-          name = name + config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
-        }
-      } else {
-        name = config.dictionaries[i][Math.floor(getRandomInt(0, 1) * config.dictionaries[i].length)];
-      }
+      const next = fromDictRander(i);
+      if (!name) { name = next; }
+      else { name += separator + next; }
     }
 
     let username = name + randomNumber(config.randomDigits);
