@@ -63,41 +63,41 @@ describe("generate-unique-username-from-email unit tests", (): void => {
 describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void => {
   it("uniqueUsernameGenerator uses all dicts w separator", (): void => {
     const actual: string = uniqueUsernameGenerator({
-      dictionaries: [['q'], ['a']],
-      separator: '-'
+      dictionaries: [["q"], ["a"]],
+      separator: "-"
     });
-    expect(actual).is.equal('q-a');
+    expect(actual).is.equal("q-a");
   });
 
   it("uniqueUsernameGenerator uses all dicts wo separator", (): void => {
     const actual: string = uniqueUsernameGenerator({
-      dictionaries: [['q'], ['a']]
+      dictionaries: [["q"], ["a"]]
     });
-    expect(actual).is.equal('qa');
+    expect(actual).is.equal("qa");
   });
   it("uniqueUsernameGenerator style UPPERCASE", (): void => {
     const actual: string = uniqueUsernameGenerator({
-      dictionaries: [['q'], ['a']],
-      style: 'upperCase'
+      dictionaries: [["q"], ["a"]],
+      style: "upperCase"
     });
-    expect(actual).is.equal('QA');
+    expect(actual).is.equal("QA");
   });
   it("uniqueUsernameGenerator style lowercase", (): void => {
     const actual: string = uniqueUsernameGenerator({
-      dictionaries: [['Q'], ['A']],
-      style: 'lowerCase'
+      dictionaries: [["Q"], ["A"]],
+      style: "lowerCase"
     });
-    expect(actual).is.equal('qa');
+    expect(actual).is.equal("qa");
   });
   it("uniqueUsernameGenerator style capital", (): void => {
     const actual: string = uniqueUsernameGenerator({
-      dictionaries: [['q'], ['A']],
-      style: 'capital'
+      dictionaries: [["q"], ["A"]],
+      style: "capital"
     });
-    expect(actual).is.equal('Qa');
+    expect(actual).is.equal("Qa");
   });
   it("uniqueUsernameGenerator works w config w default dictionaries only", (): void => {
     const actual: string = uniqueUsernameGenerator({ dictionaries: [adjectives, nouns] });
-    expect(actual).not.contains('-');
+    expect(actual).not.contains("-");
   });
 });
