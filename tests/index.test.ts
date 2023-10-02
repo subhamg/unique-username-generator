@@ -96,6 +96,20 @@ describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void
     });
     expect(actual).is.equal("Qa");
   });
+  it("uniqueUsernameGenerator style camelCase", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["qQ"], ["aA"]],
+      style: "camelCase"
+    });
+    expect(actual).is.equal("qqAa");
+  });
+  it("uniqueUsernameGenerator style PascalCase", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["qQ"], ["aA"]],
+      style: "pascalCase",
+    });
+    expect(actual).is.equal("QqAa");
+  });
   it("uniqueUsernameGenerator filters out parts containing the separator", (): void => {
     const separator = "-";
     expect(()=>{ uniqueUsernameGenerator({ dictionaries: [["a-a"]], separator }); })

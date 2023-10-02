@@ -1,7 +1,7 @@
 import { nouns, adjectives } from "./data";
 import { randomBytes } from "crypto";
 
-type Style = "lowerCase" | "upperCase" | "capital";
+type Style = "lowerCase" | "upperCase" | "capital" | "camelCase" | "pascalCase";
 
 export interface Config {
   dictionaries: string[][];
@@ -106,26 +106,42 @@ export function uniqueUsernameGenerator(config: Config): string {
       }
       return d[getRandomInt(0, d.length - 1)];
     }
-    const dictionariesLength = config.dictionaries.length;
+
+    const parts = config.dictionaries.map((_, i) => fromDictRander(i).toLowerCase());
     let name = "";
-    for (let i = 0; i < dictionariesLength; i++) {
-      const next = fromDictRander(i);
-      if (!name) { name = next; }
-      else { name += separator + next; }
+
+    const cap = (w: string) => { return w.charAt(0).toUpperCase() + w.slice(1); };
+    switch (config.style) {
+      case "capital":
+        {
+          name = cap(parts.join(separator));
+          break;
+        }
+      case "upperCase":
+        {
+          name = parts.join(separator).toUpperCase();
+          break;
+        }
+      case "camelCase":
+        {
+          const [first, ...rest] = parts;
+          name = [first].concat(rest.map(x => cap(x))).join(separator);
+          break;
+        }
+      case "pascalCase":
+        {
+          name = parts.map(x => cap(x)).join(separator);
+          break;
+        }
+      case "lowerCase":
+      default:
+        {
+          name = parts.join(separator);
+          break;
+        }
     }
 
-    let username = name + randomNumber(config.randomDigits);
-
-    username = username.toLowerCase();
-
-    if (config.style === "lowerCase") {
-      username = username.toLowerCase();
-    } else if (config.style === "capital") {
-      const [firstLetter, ...rest] = username.split("");
-      username = firstLetter.toUpperCase() + rest.join("");
-    } else if (config.style === "upperCase") {
-      username = username.toUpperCase();
-    }
+    const username = name + randomNumber(config.randomDigits);
 
     if (config.length) {
       return username.substring(0, config.length);
