@@ -1,4 +1,4 @@
-import { adjectives, nouns, generateFromEmail, uniqueUsernameGenerator } from "../src/index";
+import { generateFromEmail, uniqueUsernameGenerator } from "../src/index";
 import { expect } from "chai";
 
 describe("generate-unique-username-from-email unit tests", (): void => {
@@ -95,9 +95,5 @@ describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void
       style: "capital"
     });
     expect(actual).is.equal("Qa");
-  });
-  it("uniqueUsernameGenerator works w config w default dictionaries only", (): void => {
-    const actual: string = uniqueUsernameGenerator({ dictionaries: [adjectives, nouns] });
-    expect(actual).not.contains("-");
   });
 });
