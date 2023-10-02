@@ -75,6 +75,20 @@ describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void
     });
     expect(actual).is.equal("qa");
   });
+  it("uniqueUsernameGenerator digits 1", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["q"], ["a"]],
+      randomDigits: 1
+    });
+    expect(actual).to.match(new RegExp("qa[1-9]"));
+  });
+  it("uniqueUsernameGenerator digits 3", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["q"], ["a"]],
+      randomDigits: 3
+    });
+    expect(actual).to.match(new RegExp("qa[1-9][0-9]{2}"));
+  });
   it("uniqueUsernameGenerator style UPPERCASE", (): void => {
     const actual: string = uniqueUsernameGenerator({
       dictionaries: [["q"], ["a"]],
