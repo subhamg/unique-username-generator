@@ -72,6 +72,8 @@ export function uniqueUsernameGenerator(config: Config): string {
     );
   } else {
     const separator = config.separator || "";
+    const maxLength = config.length || 15;
+
     const fromDictRander = (i: number) => {
       if (config.dictionaries[i].length === 0) {
         throw new Error(
@@ -121,14 +123,9 @@ export function uniqueUsernameGenerator(config: Config): string {
         }
     }
 
-    const username = name + randomNumber(config.randomDigits);
+    name += randomNumber(config.randomDigits);
 
-    if (config.length) {
-      return username.substring(0, config.length);
-    } else {
-      return username.substring(0, 15);
-    }
-
+    return name.substring(0, maxLength);
   }
 }
 
