@@ -96,4 +96,9 @@ describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void
     });
     expect(actual).is.equal("Qa");
   });
+  it("uniqueUsernameGenerator filters out parts containing the separator", (): void => {
+    const separator = "-";
+    expect(()=>{ uniqueUsernameGenerator({ dictionaries: [["a-a"]], separator }); })
+      .to.throw(`Dictionary #0 is empty after filtering out entries containing separator '${separator}'`);
+  });
 });

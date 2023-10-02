@@ -91,9 +91,22 @@ export function uniqueUsernameGenerator(config: Config): string {
       "the 'dictionary' field empty in the config object",
     );
   } else {
-    const fromDictRander = (i: number) => config.dictionaries[i][getRandomInt(0, config.dictionaries[i].length - 1)];
-    const dictionariesLength = config.dictionaries.length;
     const separator = config.separator || "";
+    const fromDictRander = (i: number) => {
+      if (config.dictionaries[i].length === 0) {
+        throw new Error(
+          `Dictionary #${i} is empty`
+        );
+      }
+      const d = (separator == "" ? config.dictionaries[i] : config.dictionaries[i].filter(x => x.indexOf(separator) == -1));
+      if (d.length === 0) {
+        throw new Error(
+          `Dictionary #${i} is empty after filtering out entries containing separator '${separator}'`
+        );
+      }
+      return d[getRandomInt(0, d.length - 1)];
+    }
+    const dictionariesLength = config.dictionaries.length;
     let name = "";
     for (let i = 0; i < dictionariesLength; i++) {
       const next = fromDictRander(i);
