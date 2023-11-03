@@ -1,7 +1,7 @@
 import { nouns, adjectives } from "./data";
 import { randomBytes } from "crypto";
 
-type Style = "lowerCase" | "upperCase" | "capital";
+type Style = "lowerCase" | "upperCase" | "capital" | "camelCase" | "pascalCase";
 
 export interface Config {
   dictionaries: string[][];
@@ -22,31 +22,11 @@ const getRandomInt = (min: number, max: number): number => {
 
 
 const randomNumber = (maxNumber: number | undefined) => {
-  let randomNumberString;
-  switch (maxNumber) {
-    case 1:
-      randomNumberString = Math.floor(getRandomInt(1, 9)).toString();
-      break;
-    case 2:
-      randomNumberString = Math.floor(getRandomInt(10, 90)).toString();
-      break;
-    case 3:
-      randomNumberString = Math.floor(getRandomInt(100, 900)).toString();
-      break;
-    case 4:
-      randomNumberString = Math.floor(getRandomInt(1000, 9000)).toString();
-      break;
-    case 5:
-      randomNumberString = Math.floor(getRandomInt(10000, 90000)).toString();
-      break;
-    case 6:
-      randomNumberString = Math.floor(getRandomInt(100000, 900000)).toString();
-      break;
-    default:
-      randomNumberString = "";
-      break;
+  if (!maxNumber || maxNumber < 1 || maxNumber > 6) { return ""; }
+  else {
+    const s = Math.pow(10, maxNumber - 1);
+    return Math.floor(getRandomInt(s, 10 * s - 1)).toString();
   }
-  return randomNumberString;
 };
 
 export function generateFromEmail(
@@ -91,35 +71,61 @@ export function uniqueUsernameGenerator(config: Config): string {
       "the 'dictionary' field empty in the config object",
     );
   } else {
-    const fromDictRander = (i: number) => config.dictionaries[i][getRandomInt(0, config.dictionaries[i].length - 1)];
-    const dictionariesLength = config.dictionaries.length;
     const separator = config.separator || "";
+    const maxLength = config.length || 15;
+
+    const fromDictRander = (i: number) => {
+      if (config.dictionaries[i].length === 0) {
+        throw new Error(
+          `Dictionary #${i} is empty`
+        );
+      }
+      const d = (separator == "" ? config.dictionaries[i] : config.dictionaries[i].filter(x => x.indexOf(separator) == -1));
+      if (d.length === 0) {
+        throw new Error(
+          `Dictionary #${i} is empty after filtering out entries containing separator '${separator}'`
+        );
+      }
+      return d[getRandomInt(0, d.length - 1)];
+    }
+
+    const parts = config.dictionaries.map((_, i) => fromDictRander(i).toLowerCase());
     let name = "";
-    for (let i = 0; i < dictionariesLength; i++) {
-      const next = fromDictRander(i);
-      if (!name) { name = next; }
-      else { name += separator + next; }
+
+    const cap = (w: string) => { return w.charAt(0).toUpperCase() + w.slice(1); };
+    switch (config.style) {
+      case "capital":
+        {
+          name = cap(parts.join(separator));
+          break;
+        }
+      case "upperCase":
+        {
+          name = parts.join(separator).toUpperCase();
+          break;
+        }
+      case "camelCase":
+        {
+          const [first, ...rest] = parts;
+          name = [first].concat(rest.map(x => cap(x))).join(separator);
+          break;
+        }
+      case "pascalCase":
+        {
+          name = parts.map(x => cap(x)).join(separator);
+          break;
+        }
+      case "lowerCase":
+      default:
+        {
+          name = parts.join(separator);
+          break;
+        }
     }
 
-    let username = name + randomNumber(config.randomDigits);
+    name += randomNumber(config.randomDigits);
 
-    username = username.toLowerCase();
-
-    if (config.style === "lowerCase") {
-      username = username.toLowerCase();
-    } else if (config.style === "capital") {
-      const [firstLetter, ...rest] = username.split("");
-      username = firstLetter.toUpperCase() + rest.join("");
-    } else if (config.style === "upperCase") {
-      username = username.toUpperCase();
-    }
-
-    if (config.length) {
-      return username.substring(0, config.length);
-    } else {
-      return username.substring(0, 15);
-    }
-
+    return name.substring(0, maxLength);
   }
 }
 

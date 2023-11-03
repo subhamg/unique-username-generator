@@ -1,4 +1,4 @@
-import { adjectives, nouns, generateFromEmail, uniqueUsernameGenerator } from "../src/index";
+import { generateFromEmail, uniqueUsernameGenerator } from "../src/index";
 import { expect } from "chai";
 
 describe("generate-unique-username-from-email unit tests", (): void => {
@@ -75,6 +75,33 @@ describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void
     });
     expect(actual).is.equal("qa");
   });
+  it("uniqueUsernameGenerator length", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["qa"]],
+      length: 1
+    });
+    expect(actual).is.equal("q");
+  });
+  it("uniqueUsernameGenerator default length", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["qazwsxedcrfvtgby"]]
+    });
+    expect(actual).is.equal("qazwsxedcrfvtgb");
+  });
+  it("uniqueUsernameGenerator digits 1", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["q"], ["a"]],
+      randomDigits: 1
+    });
+    expect(actual).to.match(new RegExp("qa[1-9]"));
+  });
+  it("uniqueUsernameGenerator digits 3", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["q"], ["a"]],
+      randomDigits: 3
+    });
+    expect(actual).to.match(new RegExp("qa[1-9][0-9]{2}"));
+  });
   it("uniqueUsernameGenerator style UPPERCASE", (): void => {
     const actual: string = uniqueUsernameGenerator({
       dictionaries: [["q"], ["a"]],
@@ -96,8 +123,23 @@ describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void
     });
     expect(actual).is.equal("Qa");
   });
-  it("uniqueUsernameGenerator works w config w default dictionaries only", (): void => {
-    const actual: string = uniqueUsernameGenerator({ dictionaries: [adjectives, nouns] });
-    expect(actual).not.contains("-");
+  it("uniqueUsernameGenerator style camelCase", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["qQ"], ["aA"]],
+      style: "camelCase"
+    });
+    expect(actual).is.equal("qqAa");
+  });
+  it("uniqueUsernameGenerator style PascalCase", (): void => {
+    const actual: string = uniqueUsernameGenerator({
+      dictionaries: [["qQ"], ["aA"]],
+      style: "pascalCase",
+    });
+    expect(actual).is.equal("QqAa");
+  });
+  it("uniqueUsernameGenerator filters out parts containing the separator", (): void => {
+    const separator = "-";
+    expect(()=>{ uniqueUsernameGenerator({ dictionaries: [["a-a"]], separator }); })
+      .to.throw(`Dictionary #0 is empty after filtering out entries containing separator '${separator}'`);
   });
 });
