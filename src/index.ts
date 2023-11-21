@@ -64,10 +64,11 @@ export function generateFromEmail(
 export function generateUsername(
   separator?: string,
   randomDigits?: number,
-  length?: number
+  length?: number,
+  prefix?: string
 ): string {
   const noun = nouns[Math.floor(Math.random() * nouns.length)];
-  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const adjective = prefix || adjectives[Math.floor(Math.random() * adjectives.length)];
 
   let username;
   // Create unique username

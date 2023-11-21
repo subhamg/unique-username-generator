@@ -84,8 +84,8 @@ const username = generateUsername("", 2, 19);
 console.log(username); // blossomlogistical73
 
 // With all parameters
-const username = generateUsername("-", 2, 20);
-console.log(username); // blossom-logistical73
+const username = generateUsername("-", 2, 20, 'unique.username');
+console.log(username); // unique.username-73
 ```
 
 ### Default dictionaries
