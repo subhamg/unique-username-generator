@@ -1,4 +1,4 @@
-import { adjectives, nouns, generateFromEmail, uniqueUsernameGenerator } from "../src/index";
+import { adjectives, nouns, generateFromEmail, uniqueUsernameGenerator, generateUsername } from "../src/index";
 import { expect } from "chai";
 
 describe("generate-unique-username-from-email unit tests", (): void => {
@@ -101,3 +101,29 @@ describe("generate-unique-username-uniqueUsernameGenerator unit tests", (): void
     expect(actual).not.contains("-");
   });
 });
+
+describe("generate-unique-username unit tests", (): void => {
+  it("generating unique username", (): void => {
+    const actual: string = generateUsername();
+    expect(typeof actual).is.equal("string");
+    expect(actual).is.not.equal("");
+  });
+
+  it("generating unique username with separator", (): void => {
+    const actual: string = generateUsername("-");
+    expect(actual).is.contains("-");
+    expect(actual.split('-').length).is.greaterThan(1);
+  });
+  it("generating unique username with separator and no random number", (): void => {
+    const actual: string = generateUsername("-", 0);
+    expect(actual).to.not.match(/[0-9]/);
+  });
+  it("generating unique username with max length", (): void => {
+    const actual: string = generateUsername("-", 2, 5);
+    expect(actual).to.lengthOf(5)
+  });
+  it("generating unique username with max length and prefix", (): void => {
+    const actual: string = generateUsername("-", undefined, undefined, "unique username");
+    expect(actual).to.contain(`unique-username`)
+  });
+})
