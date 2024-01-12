@@ -68,7 +68,7 @@ export function generateUsername(
   prefix?: string
 ): string {
   const noun = nouns[Math.floor(Math.random() * nouns.length)];
-  const adjective = prefix ? prefix.replace(/\s{2,}/g, ' ').replace(/\s/g, separator ?? '').toLocaleLowerCase() : adjectives[Math.floor(Math.random() * adjectives.length)];
+  const adjective = prefix ? prefix.replace(/\s{2,}/g, " ").replace(/\s/g, separator ?? "").toLocaleLowerCase() : adjectives[Math.floor(Math.random() * adjectives.length)];
 
   let username;
   // Create unique username

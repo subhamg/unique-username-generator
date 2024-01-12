@@ -112,7 +112,7 @@ describe("generate-unique-username unit tests", (): void => {
   it("generating unique username with separator", (): void => {
     const actual: string = generateUsername("-");
     expect(actual).is.contains("-");
-    expect(actual.split('-').length).is.greaterThan(1);
+    expect(actual.split("-").length).is.greaterThan(1);
   });
   it("generating unique username with separator and no random number", (): void => {
     const actual: string = generateUsername("-", 0);
