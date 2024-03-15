@@ -58,16 +58,17 @@ export function generateFromEmail(
   // Replace all special characters like "@ . _ ";
   const name = nameParts.replace(/[&/\\#,+()$~%._@'":*?<>{}]/g, "");
   // Create and return unique username
-  return name + randomNumber(randomDigits);
+  return generateUsername(undefined, randomDigits, undefined, name, true);
 }
 
 export function generateUsername(
   separator?: string,
   randomDigits?: number,
   length?: number,
-  prefix?: string
+  prefix?: string,
+  prefixOnly?: boolean
 ): string {
-  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  const noun = !prefixOnly ? nouns[Math.floor(Math.random() * nouns.length)] : "";
   const adjective = prefix ? prefix.replace(/\s{2,}/g, " ").replace(/\s/g, separator ?? "").toLocaleLowerCase() : adjectives[Math.floor(Math.random() * adjectives.length)];
 
   let username;
@@ -79,7 +80,12 @@ export function generateUsername(
   }
 
   if (length) {
-    return username.substring(0, length);
+    username = username.substring(0, length);
+  }
+
+  // strip trailing separator
+  if (separator && username.endsWith(separator)) {
+    username = username.slice(0, -separator.length);
   }
 
   return username;
