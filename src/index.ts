@@ -1,5 +1,4 @@
 import { nouns, adjectives } from "./data";
-import { randomBytes } from "crypto";
 
 type Style = "lowerCase" | "upperCase" | "capital";
 
@@ -11,15 +10,10 @@ export interface Config {
   style?: Style;
 }
 
-// Function to generate a random number within a given range
-const getRandomInt = (min: number, max: number): number => {
-  const randomBuffer = randomBytes(4); // 4 bytes to generate a 32-bit integer
-
-  const randomInt = randomBuffer.readUInt32BE(0); // Convert bytes to an unsigned 32-bit integer
-
-  return min + (randomInt % (max - min + 1));
-};
-
+// Function to generate a random number (unsigned 32-bit integers) within a given range
+// updated to only use edge runtime compatible apis
+const getRandomInt = (min = 0, max = 4294967295) =>
+  ((Math.random() * ((max | 0) - (min | 0) + 1.0)) + (min | 0)) | 0;
 
 const randomNumber = (maxNumber: number | undefined) => {
   let randomNumberString;
