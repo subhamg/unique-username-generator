@@ -120,10 +120,18 @@ describe("generate-unique-username unit tests", (): void => {
   });
   it("generating unique username with max length", (): void => {
     const actual: string = generateUsername("-", 2, 5);
-    expect(actual).to.lengthOf(5)
+    expect(actual).to.lengthOf(5);
   });
   it("generating unique username with max length and prefix", (): void => {
     const actual: string = generateUsername("-", undefined, undefined, "unique username");
-    expect(actual).to.contain(`unique-username`)
+    expect(actual).to.contain(`unique-username`);
+  });
+  it("generating unique username with prefix only", (): void => {
+    const actual: string = generateUsername("-", undefined, undefined, "unique username", true);
+    expect(actual).to.equal(`unique-username`);
+  });
+  it("generating unique username with random number and prefix only", (): void => {
+    const actual: string = generateUsername("-", 1, undefined, "unique username", true);
+    expect(actual).to.contain(`unique-username-`);
   });
 })
