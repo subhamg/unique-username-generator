@@ -70,31 +70,11 @@ export function generateMany(options: GenerateManyOptions): string[] {
 }
 
 const randomNumber = (maxNumber: number | undefined) => {
-  let randomNumberString;
-  switch (maxNumber) {
-    case 1:
-      randomNumberString = Math.floor(getRandomInt(1, 9)).toString();
-      break;
-    case 2:
-      randomNumberString = Math.floor(getRandomInt(10, 90)).toString();
-      break;
-    case 3:
-      randomNumberString = Math.floor(getRandomInt(100, 900)).toString();
-      break;
-    case 4:
-      randomNumberString = Math.floor(getRandomInt(1000, 9000)).toString();
-      break;
-    case 5:
-      randomNumberString = Math.floor(getRandomInt(10000, 90000)).toString();
-      break;
-    case 6:
-      randomNumberString = Math.floor(getRandomInt(100000, 900000)).toString();
-      break;
-    default:
-      randomNumberString = "";
-      break;
+  if (!maxNumber || maxNumber < 1 || maxNumber > 6) { return ""; }
+  else {
+    const s = Math.pow(10, maxNumber - 1);
+    return Math.floor(getRandomInt(s, 10 * s - 1)).toString();
   }
-  return randomNumberString;
 };
 
 export function generateFromEmail(email: string, randomDigits?: number): string;
@@ -175,6 +155,8 @@ export function uniqueUsernameGenerator(config: Config): string {
     const fromDictRander = (i: number) => usableDictionaries[i][randInt(0, usableDictionaries[i].length - 1)];
     const dictionariesLength = usableDictionaries.length;
     const separator = config.separator || "";
+    const maxLength = config.length || 15;
+
     // Template-based assembly
     let username: string;
     let alreadyFormatted = false;
@@ -195,12 +177,7 @@ export function uniqueUsernameGenerator(config: Config): string {
       username = formatUsername(username, config.style ?? "lowerCase", separator);
     }
 
-    if (config.length) {
-      return username.substring(0, config.length);
-    } else {
-      return username.substring(0, 15);
-    }
-
+    return username.substring(0, maxLength);
   }
 }
 
